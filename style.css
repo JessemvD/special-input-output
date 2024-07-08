@@ -75,3 +75,9 @@ img {
     margin: 10px 0;
     box-sizing: border-box;
 }
+
+@media only screen and (max-width: 900px) {
+    #api-data {
+        grid-template-columns: 1fr;
+    }
+  }

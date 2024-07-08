@@ -43,12 +43,11 @@ function displayData(users) {
     });
 
     submitButton.addEventListener('click', () => {
-        const passwordInput = document.getElementById('password-input').value.trim(); // Trimmed input value
+        const passwordInput = document.getElementById('password-input').value.trim();
         console.log('Password input:', passwordInput);
         console.log('Current user:', currentUser);
     
         if (passwordInput === currentUser.PIN) {
-            // Register the login using the 'registrate' endpoint
             fetch('https://steijlen.sd-lab.nl/ex-digsign/registrate', {
                 method: 'POST',
                 headers: {
@@ -60,13 +59,12 @@ function displayData(users) {
             .then(registrationResponse => {
                 console.log('Registration response:', registrationResponse);
                 
-                // Fetch registrations to count logins in the past week
                 return fetch(`https://steijlen.sd-lab.nl/ex-digsign/registrations/${currentUser.ID}`)
                     .then(response => response.json())
                     .then(registrations => {
                         console.log('Fetched registrations:', registrations);
                         const loginCount = countLoginsInPastWeek(registrations);
-                        console.log('Login count:', loginCount); // Log login count
+                        console.log('Login count:', loginCount);
                         const message = loginCount >= 3 ? "fijn dat je het zo gezellig vind bij ons!" : "we zouden het leuk vinden je vaker te zien!";
                         console.log('Redirecting with message:', message);
                         window.location.href = `success.html?message=${encodeURIComponent(message)}`;
@@ -88,7 +86,7 @@ function displayData(users) {
 
 function countLoginsInPastWeek(registrations) {
     const now = new Date();
-    const oneWeekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000); // One week ago
+    const oneWeekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
     let count = 0;
 
     registrations.forEach(registration => {
